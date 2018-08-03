@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ABCInternationalSchool.Models.Processed_applications>
+ 
+@{
+    ViewBag.Title = "Process";
+}
+
+<h2>Process</h2>
+@using (Html.BeginForm())
+{
+<h2>Process Application Form</h2>
+<label>Enter Application Id :</label>@Html.TextBox("txtid")<input type="submit" value="Status" name="Command"/><br />
+<label>Enter Comments :</label>@Html.TextBox("txtcomm")
+<br />
+<input type="submit" value="SUBMIT" name="Command"/>
+<div>
+    @{
+    if (ViewData["id"] != null)
+    {
+        ABCInternationalSchool.Models.Processed_applications abc = (ABCInternationalSchool.Models.Processed_applications)ViewData["id"];
+            if(@abc.Comments=="Not yet Processed,check later")
+            {
+            <label> Status : The application is not yet resolved.</label>
+            }
+            else
+            {
+            <label> Status : Your Application is processed, Kindly meet the person :@abc.ResolvedBy</label>
+            }
+        
+    }
+}
+</div>
+    }

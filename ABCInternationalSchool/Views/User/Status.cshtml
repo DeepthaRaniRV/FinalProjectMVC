@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ABCInternationalSchool.Models.Application>
+@{
+    ViewBag.Title = "Status";
+}
+
+<h2>Status</h2>
+@using (Html.BeginForm())
+{
+    <label> Enter Application Id:</label> @Html.TextBox("txtid")<input type="submit" value="Check Status" />
+}

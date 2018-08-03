@@ -1,0 +1,17 @@
+﻿<div style="background-color:antiquewhite;border:2px thick brown;font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
+    <center> <h1>ABC INTERNATIONAL SCHOOL</h1></center>
+</div>
+
+<div style="background-color:aquamarine;color:darkblue;width:auto;height:auto;">
+    <table border="1">
+        <tr>
+            <td>@Html.ActionLink("Apply", "Insert", "User")</td>
+            <td>@Html.ActionLink("See Status", "Status", "User")</td>
+            <td>@Html.ActionLink("Process It", "Process", "User")</td>
+            <td>@Html.ActionLink("Show Report", "Report", "User")</td>
+        </tr>
+    </table>
+</div>
+<div style="background-color:greenyellow">
+    @RenderBody()
+</div>

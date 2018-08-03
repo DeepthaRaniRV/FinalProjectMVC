@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Insert";
+}
+
+<h2>Insert</h2>
+
+@using (Html.BeginForm())
+{
+
+
+
+    <label><u><b>Online Application Form</b></u></label>
+<table>
+    <tr>
+    <td colspan="2">Apply Application Order</td>
+    </tr>
+    <tr><td>Select Branch :</td><td>@Html.DropDownList("ddlbranch", new List<SelectListItem> { new SelectListItem { Text = "HSR Layout", Value = "1" },  new SelectListItem { Text = "Yeswanthpur", Value = "2" },  new SelectListItem { Text = "Tumkur", Value = "3" } })
+
+      </td></tr>
+
+    
+    <tr><td>Select Class Id :</td><td>@Html.DropDownList("ddlclass", new List<SelectListItem>
+                                 { new SelectListItem { Text = "1", Value = "1" },
+                                     new SelectListItem { Text = "2", Value = "2" },
+                                     new SelectListItem { Text = "3", Value = "3" },
+                                     new SelectListItem { Text = "4", Value = "4" },
+                                     new SelectListItem { Text = "5", Value = "5" },
+                                     new SelectListItem { Text = "6", Value = "6" },
+                                     new SelectListItem { Text = "7", Value = "7" },
+                                     new SelectListItem { Text = "8", Value = "8" },
+                                     new SelectListItem { Text = "9", Value = "9" },
+                                     new SelectListItem { Text = "10", Value = "10" }
+                                 }) 
+        </td></tr>
+
+    
+    <tr><td>Enter Candidate Name :</td><td>@Html.TextBox("txtname")</td></tr>
+
+   
+    <tr><td>Enter Age :</td><td><input type="number" min="5" max="15" id="txtage" name="txtage"/> </td></tr>
+
+   
+    <tr><td>Enter Date of Birth (dd-mm-yyyy) :</td><td><input type="datetime" id="dtdate" name="dtdate"/> </td></tr>
+
+   
+    <tr><td>Enter Address :</td><td>@Html.TextArea("txtadd") </td></tr>
+
+    <tr><td><input type="submit" id="Insert" value="SUBMIT" /></td><td></td></tr>
+    </table>
+
+
+
+
+}

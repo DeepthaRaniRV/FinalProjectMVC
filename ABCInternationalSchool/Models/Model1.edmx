@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OAF_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="Age" Type="int" Nullable="false" />
+          <Property Name="Branch_id" Type="int" Nullable="false" />
+          <Property Name="Class_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Branch_id" />
+          </Key>
+          <Property Name="Branch_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contact_person" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Processed_applications">
+          <Key>
+            <PropertyRef Name="App_id" />
+          </Key>
+          <Property Name="App_id" Type="int" Nullable="false" />
+          <Property Name="Comments" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date_of_Resolve" Type="datetime" />
+          <Property Name="ResolvedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IstApplications" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalByCategory" Type="int" Nullable="false" />
+          <Property Name="TotalNoOfApplications" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'OAF_DB.dbo.Seats' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Seats">
+          <Key>
+            <PropertyRef Name="Branch_id" />
+            <PropertyRef Name="Class_id" />
+            <PropertyRef Name="Seats" />
+          </Key>
+          <Property Name="Branch_id" Type="int" Nullable="false" />
+          <Property Name="Class_id" Type="int" Nullable="false" />
+          <Property Name="Seats" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Applicati__Branc__2C3393D0">
+          <End Role="Branch" Type="Self.Branch" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_id" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="Branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Processed__App_i__2B3F6F97">
+          <End Role="Applications" Type="Self.Applications" Multiplicity="1" />
+          <End Role="Processed_applications" Type="Self.Processed_applications" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Applications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Processed_applications">
+              <PropertyRef Name="App_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OAF_DBModelStoreContainer">
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Processed_applications" EntityType="Self.Processed_applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Report" EntityType="Self.Report" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seats" EntityType="Self.Seats" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[Seats].[Branch_id] AS [Branch_id], 
+[Seats].[Class_id] AS [Class_id], 
+[Seats].[Seats] AS [Seats]
+FROM [dbo].[Seats] AS [Seats]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Applicati__Branc__2C3393D0" Association="Self.FK__Applicati__Branc__2C3393D0">
+            <End Role="Branch" EntitySet="Branch" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Processed__App_i__2B3F6F97" Association="Self.FK__Processed__App_i__2B3F6F97">
+            <End Role="Applications" EntitySet="Applications" />
+            <End Role="Processed_applications" EntitySet="Processed_applications" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OAF_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OAF_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Reports" EntityType="OAF_DBModel.Report" />
+          <EntitySet Name="Seats" EntityType="OAF_DBModel.Seat" />
+          <EntitySet Name="Processed_applications" EntityType="OAF_DBModel.Processed_applications" />
+          <EntitySet Name="Applications" EntityType="OAF_DBModel.Application" />
+          <EntitySet Name="Branches" EntityType="OAF_DBModel.Branch" />
+          <AssociationSet Name="FK__Applicati__Branc__2C3393D0" Association="OAF_DBModel.FK__Applicati__Branc__2C3393D0">
+            <End Role="Branch" EntitySet="Branches" />
+            <End Role="Application" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Processed__App_i__2B3F6F97" Association="OAF_DBModel.FK__Processed__App_i__2B3F6F97">
+            <End Role="Application" EntitySet="Applications" />
+            <End Role="Processed_applications" EntitySet="Processed_applications" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IstApplications" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalByCategory" Type="Int32" Nullable="false" />
+          <Property Name="TotalNoOfApplications" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Seat">
+          <Key>
+            <PropertyRef Name="Branch_id" />
+            <PropertyRef Name="Class_id" />
+            <PropertyRef Name="Seats" />
+          </Key>
+          <Property Name="Branch_id" Type="Int32" Nullable="false" />
+          <Property Name="Class_id" Type="Int32" Nullable="false" />
+          <Property Name="Seats" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Processed_applications">
+          <Key>
+            <PropertyRef Name="App_id" />
+          </Key>
+          <Property Name="App_id" Type="Int32" Nullable="false" />
+          <Property Name="Comments" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date_of_Resolve" Type="DateTime" Precision="3" />
+          <Property Name="ResolvedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Application" Relationship="OAF_DBModel.FK__Processed__App_i__2B3F6F97" FromRole="Processed_applications" ToRole="Application" />
+        </EntityType>
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Age" Type="Int32" Nullable="false" />
+          <Property Name="Branch_id" Type="Int32" Nullable="false" />
+          <Property Name="Class_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Branch" Relationship="OAF_DBModel.FK__Applicati__Branc__2C3393D0" FromRole="Application" ToRole="Branch" />
+          <NavigationProperty Name="Processed_applications" Relationship="OAF_DBModel.FK__Processed__App_i__2B3F6F97" FromRole="Application" ToRole="Processed_applications" />
+        </EntityType>
+        <EntityType Name="Branch">
+          <Key>
+            <PropertyRef Name="Branch_id" />
+          </Key>
+          <Property Name="Branch_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contact_person" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Applications" Relationship="OAF_DBModel.FK__Applicati__Branc__2C3393D0" FromRole="Branch" ToRole="Application" />
+        </EntityType>
+        <Association Name="FK__Applicati__Branc__2C3393D0">
+          <End Type="OAF_DBModel.Branch" Role="Branch" Multiplicity="1" />
+          <End Type="OAF_DBModel.Application" Role="Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Branch">
+              <PropertyRef Name="Branch_id" />
+            </Principal>
+            <Dependent Role="Application">
+              <PropertyRef Name="Branch_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Processed__App_i__2B3F6F97">
+          <End Type="OAF_DBModel.Application" Role="Application" Multiplicity="1" />
+          <End Type="OAF_DBModel.Processed_applications" Role="Processed_applications" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Application">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Processed_applications">
+              <PropertyRef Name="App_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OAF_DBModelStoreContainer" CdmEntityContainer="OAF_DBEntities">
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="OAF_DBModel.Report">
+              <MappingFragment StoreEntitySet="Report">
+                <ScalarProperty Name="TotalNoOfApplications" ColumnName="TotalNoOfApplications" />
+                <ScalarProperty Name="TotalByCategory" ColumnName="TotalByCategory" />
+                <ScalarProperty Name="IstApplications" ColumnName="IstApplications" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seats">
+            <EntityTypeMapping TypeName="OAF_DBModel.Seat">
+              <MappingFragment StoreEntitySet="Seats">
+                <ScalarProperty Name="Seats" ColumnName="Seats" />
+                <ScalarProperty Name="Class_id" ColumnName="Class_id" />
+                <ScalarProperty Name="Branch_id" ColumnName="Branch_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Processed_applications">
+            <EntityTypeMapping TypeName="OAF_DBModel.Processed_applications">
+              <MappingFragment StoreEntitySet="Processed_applications">
+                <ScalarProperty Name="ResolvedBy" ColumnName="ResolvedBy" />
+                <ScalarProperty Name="Date_of_Resolve" ColumnName="Date_of_Resolve" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="App_id" ColumnName="App_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="OAF_DBModel.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="Class_id" ColumnName="Class_id" />
+                <ScalarProperty Name="Branch_id" ColumnName="Branch_id" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Branches">
+            <EntityTypeMapping TypeName="OAF_DBModel.Branch">
+              <MappingFragment StoreEntitySet="Branch">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Contact_person" ColumnName="Contact_person" />
+                <ScalarProperty Name="Branch_id" ColumnName="Branch_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
